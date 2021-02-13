@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
+
 class GroupPage extends StatefulWidget {
+  static String id = 'group_page';
   GroupPage({Key key, this.title}) : super(key:key);
 
   final String title;
@@ -21,6 +23,7 @@ class Person {
 
 class _GroupPageState extends State<GroupPage> {
   @override
+
   Widget build(BuildContext context) {
     var data = [
       new Person("Ana", 89),
@@ -49,8 +52,11 @@ class _GroupPageState extends State<GroupPage> {
     );
 
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
+      appBar: AppBar(
+          title: Text(widget.title),
+      ),
+      body:
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -61,7 +67,8 @@ class _GroupPageState extends State<GroupPage> {
           ],
         ),
       ),
-
     );
   }
+
+
 }
