@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:treehacksApp/screens/group_page.dart';
+import 'package:treehacksApp/screens/global_leaderboard_screen.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -29,6 +30,9 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           new ListTile(
             title: new Text("Global Rankings"),
+            onTap: (){
+              Navigator.pushNamed(context, GlobalLeaderboard.id);
+            },
           ),
           new ListTile(
             title: new Text("Settings"),
