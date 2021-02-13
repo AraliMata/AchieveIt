@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:treehacksApp/screens/global_leaderboard_screen.dart';
 import 'package:treehacksApp/screens/welcome_screen.dart';
 import 'package:treehacksApp/screens/login_screen.dart';
 import 'package:treehacksApp/screens/registration_screen.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context)=>LoginScreen(),
         RegistrationScreen.id: (context)=>RegistrationScreen(),
         GroupPage.id: (context) => GroupPage(),
+        GlobalLeaderboard.id: (context) => GlobalLeaderboard(),
       },
 
     );
