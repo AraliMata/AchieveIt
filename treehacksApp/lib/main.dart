@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:treehacksApp/screens/welcome_screen.dart';
 import 'package:treehacksApp/screens/login_screen.dart';
 import 'package:treehacksApp/screens/registration_screen.dart';
+import 'package:treehacksApp/screens/group_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         WelcomeScreen.id:(context)=>WelcomeScreen(),
         LoginScreen.id: (context)=>LoginScreen(),
         RegistrationScreen.id: (context)=>RegistrationScreen(),
-
+        GroupPage.id: (context) => GroupPage(),
       },
     );
   }
