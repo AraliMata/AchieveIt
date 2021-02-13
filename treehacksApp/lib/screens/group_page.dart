@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-
+import 'package:treehacksApp/screens/app_drawer.dart';
 
 class GroupPage extends StatefulWidget {
   static String id = 'group_page';
@@ -18,8 +18,8 @@ class Person {
 }
 
 class _GroupPageState extends State<GroupPage> {
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
-
   Widget build(BuildContext context) {
     var data = [
       new Person("Ana", 89),
@@ -51,20 +51,29 @@ class _GroupPageState extends State<GroupPage> {
       appBar: AppBar(
           title: Text("Group"),
       ),
+      endDrawer: AppDrawer(),
       body:
-      Center(
-        child: Column(
+      Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children:[
             Text("Current goal: "),
             Text('Ana is winning!'),
             Text('Time left: '),
             chartWidget,
           ],
         ),
-      ),
+
+
     );
   }
+
+
+
+
+
+
+
+
 
 
 }
