@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
         RegistrationScreen.id: (context)=>RegistrationScreen(),
         GroupPage.id: (context) => GroupPage(),
       },
+
     );
+
   }
 }
