@@ -4,15 +4,11 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 class GroupPage extends StatefulWidget {
   static String id = 'group_page';
-  GroupPage({Key key, this.title}) : super(key:key);
-
-  final String title;
 
   @override
   _GroupPageState createState() => _GroupPageState();
 
 }
-
 
 class Person {
   final String name;
@@ -53,7 +49,7 @@ class _GroupPageState extends State<GroupPage> {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(widget.title),
+          title: Text("Group"),
       ),
       body:
       Center(

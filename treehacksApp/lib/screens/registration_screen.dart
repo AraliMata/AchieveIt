@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:treehacksApp/screens/welcome_screen.dart';
 import 'package:treehacksApp/constants.dart';
+import 'package:treehacksApp/screens/group_page.dart';
 
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 class RegistrationScreen extends StatefulWidget {
@@ -70,7 +71,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       });
                       try {
                         
-                          Navigator.pushNamed(context, WelcomeScreen.id);
+                          Navigator.pushNamed(context, GroupPage.id);
                         
                          setState(() {
                         showSpinner = false;
