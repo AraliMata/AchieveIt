@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:treehacksApp/screens/welcome_screen.dart';
 import 'package:treehacksApp/constants.dart';
 import 'package:treehacksApp/screens/group_page.dart';
-import 'package:treehacksApp/screens/goal_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
@@ -78,7 +76,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             await _auth.createUserWithEmailAndPassword(
                                 email: email, password: password);
                         if (newUser != null) {
-                          Navigator.pushNamed(context, GoalScreen.id);
+                          Navigator.pushNamed(context, GroupPage.id);
                         }
                          setState(() {
                         showSpinner = false;

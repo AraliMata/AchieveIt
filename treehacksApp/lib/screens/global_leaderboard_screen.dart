@@ -7,8 +7,9 @@ class GlobalLeaderboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = 'Global Ranking';
-    final dbRef = FirebaseDatabase.instance.reference().child("users");
-    List<Map<String, dynamic>> lists = [];
+    final dbRef = FirebaseDatabase.instance.reference();
+    final makeCall = MakeCall();
+
 
     return  Scaffold(
         appBar: AppBar(
@@ -25,36 +26,86 @@ class GlobalLeaderboard extends StatelessWidget {
                     fontStyle: FontStyle.italic)),
           DropdownBtn(),
           Expanded(
-            child: FutureBuilder(
-                future: dbRef.once(),
-                builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    lists.clear();
-                    Map<String, dynamic> values = snapshot.data.value;
-                    values.forEach((key, values) {
-                      lists.add(values);
-                    });
+            child:
+            FutureBuilder(
+
+                future: makeCall.firebaseCalls(dbRef), // async work
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting: return CircularProgressIndicator();
+                    default:
+                      if (snapshot.hasError)
+                        return new Text('Error: ${snapshot.error}');
+                      else
                     return new ListView.builder(
                         shrinkWrap: true,
-                        itemCount: lists.length,
+                        itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("Name: " + lists[index]["name"]),
-                                Text("Group: " + lists[index]["group"]),
+                                Text(snapshot.data[index].name),
+                                Text(snapshot.data[index].groups),
+                                Text(snapshot.data[index].goals),
+                                Text(snapshot.data[index].progress),
                               ],
                             ),
                           );
                         });
                   }
-                  return LinearProgressIndicator();
                 }),
           ),
           ]
         ),
       );
+  }
+}
+
+class User{
+  String name;
+  List<String> groups;
+  String goals;
+  int progress;
+
+  User({this.name, this.groups, this.goals, this.progress});
+
+  factory User.fromJson(Map<dynamic,dynamic> parsedJson) {
+    return User(name:parsedJson['name'],groups: parsedJson['groups'],goals:parsedJson['Goals'], progress: parsedJson['progress']['Goal1']);
+  }
+}
+
+class UserList{
+  List<User> userList;
+
+  UserList({this.userList});
+
+
+  static List<User> parseusers(userJSON){
+    var rList=userJSON['users'] as List;
+    List<User> userList=rList.map((data) => User.fromJson(data)).toList();  //Add this
+    return userList;
+
+  }
+
+  factory UserList.fromJSON(Map<dynamic, dynamic> json){
+    return UserList(
+      userList: parseusers(json)
+    );
+  }
+}
+
+class MakeCall{
+  List<User> listItems=[];
+
+  Future<List<User>> firebaseCalls (DatabaseReference databaseReference) async{
+    UserList userList;
+    DataSnapshot dataSnapshot = await databaseReference.once();
+    Map<dynamic,dynamic> jsonResponse=dataSnapshot.value;
+    userList = UserList.fromJSON(jsonResponse);
+    listItems.addAll(userList.userList);
+
+    return listItems;
   }
 }
 
