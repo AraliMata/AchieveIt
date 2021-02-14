@@ -32,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
                 Text(
-                   'App Name',
+                   'Achieve it!',
                   style: TextStyle(
                     fontSize: 45.0,
                     color: Colors.grey,
