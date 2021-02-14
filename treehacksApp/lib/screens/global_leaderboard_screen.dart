@@ -8,8 +8,13 @@ class GlobalLeaderboard extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = 'Global Ranking';
     final dbRef = FirebaseDatabase.instance.reference();
-    final makeCall = MakeCall();
+    //final makeCall = MakeCall();
 
+    final user1 = User("Ana", ["Best friends", "Developers"], "Run 20 km", 90);
+    final user2 = User("Jason", ["Group1"], "Run 10 km", 45);
+    final user3 = User("Hassan", ["Group1","Best friends"], "Run 5 km", 43);
+
+    final List<User>  users = <User>[user1, user2, user3];
 
     return  Scaffold(
         appBar: AppBar(
@@ -27,35 +32,26 @@ class GlobalLeaderboard extends StatelessWidget {
           DropdownBtn(),
           Expanded(
             child:
-            FutureBuilder(
+            ListView.separated(
+              padding: const EdgeInsets.all(8),
+              itemCount: users.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  height: 80,
+                  child: Column(
+                      children: <Widget>[
+                  Text('${users[index].name}'),
+                        Text('Groups ${users[index].groups}'),
+                        Text('Goal: ${users[index].goals}'),
+                        Text('Progress: ${users[index].progress}')
 
-                future: makeCall.firebaseCalls(dbRef), // async work
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting: return CircularProgressIndicator();
-                    default:
-                      if (snapshot.hasError)
-                        return new Text('Error: ${snapshot.error}');
-                      else
-                    return new ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Card(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(snapshot.data[index].name),
-                                Text(snapshot.data[index].groups),
-                                Text(snapshot.data[index].goals),
-                                Text(snapshot.data[index].progress),
-                              ],
-                            ),
-                          );
-                        });
-                  }
-                }),
+                  ]
+                )
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) => const Divider(),
           ),
+          )
           ]
         ),
       );
@@ -68,14 +64,20 @@ class User{
   String goals;
   int progress;
 
-  User({this.name, this.groups, this.goals, this.progress});
-
-  factory User.fromJson(Map<dynamic,dynamic> parsedJson) {
-    return User(name:parsedJson['name'],groups: parsedJson['groups'],goals:parsedJson['Goals'], progress: parsedJson['progress']['Goal1']);
+  User(name, groups, goals, progress) {
+    this.name = name;
+    this.groups = groups;
+    this.goals = goals;
+    this.progress = progress;
   }
+
+
+  /*factory User.fromJson(Map<dynamic,dynamic> parsedJson) {
+    return User(name:parsedJson['name'],groups: parsedJson['groups'],goals:parsedJson['Goals'], progress: parsedJson['progress']['Goal1']);
+  }*/
 }
 
-class UserList{
+/*class UserList{
   List<User> userList;
 
   UserList({this.userList});
@@ -107,7 +109,7 @@ class MakeCall{
 
     return listItems;
   }
-}
+}*/
 
 
 class DropdownBtn extends StatefulWidget {
