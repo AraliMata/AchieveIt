@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:treehacksApp/screens/app_drawer.dart';
 
@@ -6,33 +7,54 @@ class GlobalLeaderboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = 'Global Ranking';
-    final items = List<String>.generate(10000, (i) => "Item $i");
+    final dbRef = FirebaseDatabase.instance.reference().child("users");
+    List<Map<String, dynamic>> lists = [];
 
-    return MaterialApp(
-      title: title,
-      home: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           title: Text(title),
         ),
         endDrawer: AppDrawer(),
         body: Column(
           children: <Widget>[
-          Text("Choose Goal"),
+            Text("Choose Goal ",
+                style: TextStyle(
+                    fontWeight: FontWeight.w200,
+                    fontSize: 30,
+                    fontFamily: 'Roboto',
+                    fontStyle: FontStyle.italic)),
           DropdownBtn(),
           Expanded(
-            child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text('${items[index]}'),
-              );
-             },
-            ),
+            child: FutureBuilder(
+                future: dbRef.once(),
+                builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    lists.clear();
+                    Map<String, dynamic> values = snapshot.data.value;
+                    values.forEach((key, values) {
+                      lists.add(values);
+                    });
+                    return new ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: lists.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Card(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Name: " + lists[index]["name"]),
+                                Text("Group: " + lists[index]["group"]),
+                              ],
+                            ),
+                          );
+                        });
+                  }
+                  return LinearProgressIndicator();
+                }),
           ),
           ]
         ),
-      ),
-    );
+      );
   }
 }
 
@@ -53,10 +75,10 @@ class _DropdownBtnState extends State<DropdownBtn> {
       icon: Icon(Icons.arrow_downward),
       iconSize: 24,
       elevation: 16,
-      style: TextStyle(color: Colors.deepPurple),
+      style: TextStyle(color: Colors.blueGrey, fontSize: 20),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Colors.lightBlue,
       ),
       onChanged: (String newValue) {
         setState(() {

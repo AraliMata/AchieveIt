@@ -4,6 +4,7 @@ import 'package:treehacksApp/screens/welcome_screen.dart';
 import 'package:treehacksApp/screens/login_screen.dart';
 import 'package:treehacksApp/screens/registration_screen.dart';
 import 'package:treehacksApp/screens/group_page.dart';
+import 'package:treehacksApp/screens/goal_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         RegistrationScreen.id: (context)=>RegistrationScreen(),
         GroupPage.id: (context) => GroupPage(),
         GlobalLeaderboard.id: (context) => GlobalLeaderboard(),
+        GoalScreen.id: (context) => GoalScreen(),
       },
 
     );
