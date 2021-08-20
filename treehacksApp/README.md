@@ -1,8 +1,7 @@
 # AchieveIt
 Create goals for your group and achieve it together 
 
-https://devpost.com/software/achieve-it/edit
-
+https://devpost.com/software/achieve-it/
 ## Inspiration
 When generating ideas, we realised that many people have been demotivated to work out or stride towards their goals during corona virus lock-downs, the idea was that bringing in competition from your group of friends or colleagues would help boost your productivity..
 ## What it does
